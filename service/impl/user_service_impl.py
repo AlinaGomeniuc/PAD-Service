@@ -48,7 +48,7 @@ class UserServiceImpl(UserService):
         return user.to_json()
 
     def get_processing_users_nr(self):
-        count = User.objects.filter(status="Processing").count()
+        count = User.objects.filter(status__in=["Processing", "Building"]).count()
         return jsonify({"count": count})
 
 
