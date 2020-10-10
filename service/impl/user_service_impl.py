@@ -14,6 +14,14 @@ class UserServiceImpl(UserService):
         user.save()
         return user.to_json()
 
+    def get_user_info(self, id):
+        try:
+            user = User.objects.get(pk=id)
+        except:
+            abort(404, description="User does not exist")
+
+        return user.to_json()
+
     def create_event(self, id, request_payload):
         try:
             user = User.objects.get(pk=id)

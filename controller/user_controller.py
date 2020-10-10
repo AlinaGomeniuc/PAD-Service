@@ -12,6 +12,10 @@ def register_user():
     request_payload = json.loads(request.data)
     return user_service.register_user(request_payload)
 
+@app.route("/api/user/<id>", methods=["GET"])
+def get_user(id):
+    return user_service.get_user_info(id)
+
 
 @app.route("/api/user/<id>/event", methods=["PUT"])
 def register_user_event(id):
