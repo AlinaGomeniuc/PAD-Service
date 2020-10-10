@@ -2,8 +2,7 @@ from service.user_service import UserService
 from model.user import User
 from model.event import Event
 from flask import abort
-import json
-from common import user_service_helper
+from common import user_service_helper, processing_job
 from common.constants import Statuses
 
 
@@ -30,14 +29,12 @@ class UserServiceImpl(UserService):
         user.reload()
         return user.to_json()
 
-    def compute_user_working_hours(self, id):
+    def compute_working_hours(self, id):
         try:
             user = User.objects.get(pk=id)
         except:
             abort(404, description="User does not exist")
 
         user.modify(status=Statuses.Processing.name)
-        events = user_service_helper.sort_items(json.loads(user.to_json())["events"], "timestamp")
-        working_hours = user_service_helper.compute_working_hours(events)
-        user.modify(worked_hours=working_hours)
+        processing_job.process_user_events(user)
         return user.to_json()

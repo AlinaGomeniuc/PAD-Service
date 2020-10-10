@@ -21,7 +21,7 @@ def register_user_event(id):
 
 @app.route("/api/user/<id>/finalize", methods=["PUT"])
 def compute_user_working_hours(id):
-    return user_service.compute_user_working_hours(id)
+    return user_service.compute_working_hours(id)
 
 
 if __name__ == "__main__":
