@@ -1,7 +1,7 @@
 from service.user_service import UserService
 from model.user import User
 from model.event import Event
-from flask import abort
+from flask import abort, jsonify
 from common import user_service_helper, processing_job
 from common.constants import Statuses
 
@@ -46,3 +46,9 @@ class UserServiceImpl(UserService):
         user.modify(status=Statuses.Processing.name)
         processing_job.process_user_events(user)
         return user.to_json()
+
+    def get_processing_users_nr(self):
+        count = User.objects.filter(status="Processing").count()
+        return jsonify({"count": count})
+
+

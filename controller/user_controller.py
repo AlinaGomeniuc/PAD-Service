@@ -28,6 +28,11 @@ def compute_user_working_hours(id):
     return user_service.compute_working_hours(id)
 
 
+@app.route("/api/user/status", methods=["GET"])
+def get_processing_users_nr():
+    return user_service.get_processing_users_nr()
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
