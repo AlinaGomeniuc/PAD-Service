@@ -2,6 +2,8 @@ import enum
 
 
 LIMIT = 20
+PROCESSING_TIME = 10
+SESSION_TIME = 30
 
 
 class Statuses(enum.Enum):

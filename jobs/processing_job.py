@@ -1,6 +1,6 @@
 import threading
 from common.user_service_helper import sort_items
-from common.constants import Statuses
+from common.constants import Statuses, PROCESSING_TIME
 from datetime import datetime
 import time
 import json
@@ -27,6 +27,6 @@ def process_events(user, process_time):
     user.modify(status=Statuses.Processed.name)
 
 
-def process_user_events(user, process_time=10):
+def process_user_events(user, process_time=PROCESSING_TIME):
     processing_thread = threading.Thread(target=process_events, args=(user, process_time,))
     processing_thread.start()
