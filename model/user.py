@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, DateTimeField, ListField, EmbeddedDocumentField
+from mongoengine import Document, StringField, ListField, EmbeddedDocumentField
 from model.event import Event
 
 
