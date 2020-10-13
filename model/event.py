@@ -1,5 +1,4 @@
-from mongoengine import EmbeddedDocument, DateTimeField, StringField, ReferenceField
-# from model.user import User
+from mongoengine import EmbeddedDocument, StringField
 
 
 class Event(EmbeddedDocument):
