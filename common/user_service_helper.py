@@ -8,3 +8,7 @@ def define_event_status(event_type):
     else:
         return "offline"
 
+
+def is_session_user_timed_out(user):
+    return user.status == "Timed_out"
+

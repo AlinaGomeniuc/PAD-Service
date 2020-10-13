@@ -1,7 +1,8 @@
-from common import processing_job
+from jobs import processing_job
 from flask import jsonify, abort
 from model.user import User
 from common.constants import Statuses, LIMIT
+from common import user_service_helper
 
 
 class ProcessingService:
@@ -12,6 +13,9 @@ class ProcessingService:
             user = User.objects.get(pk=id)
         except:
             abort(404, description="User does not exist")
+
+        if user_service_helper.is_session_user_timed_out(user):
+            abort(404, description="User session timed out")
 
         user.modify(status=Statuses.Processing.name)
         processing_job.process_user_events(user)

@@ -20,13 +20,13 @@ def compute_user_working_hours(user):
     return str(hours)
 
 
-def process_events(user):
-    time.sleep(10)
+def process_events(user, process_time):
+    time.sleep(process_time)
     working_hours = compute_user_working_hours(user)
     user.modify(worked_hours=working_hours)
     user.modify(status=Statuses.Processed.name)
 
 
-def process_user_events(user):
-    processing_thread = threading.Thread(target=process_events, args=(user,))
+def process_user_events(user, process_time=10):
+    processing_thread = threading.Thread(target=process_events, args=(user, process_time,))
     processing_thread.start()
