@@ -6,7 +6,7 @@ from common import user_service_helper
 
 def process_events(user, session_time):
     time.sleep(session_time)
-    if not user_service_helper.check_user_status(user, "Processed"):
+    if user_service_helper.check_user_status(user, "Building"):
         user.modify(status=Statuses.Timed_out.name)
 
 

@@ -37,8 +37,8 @@ def create_event(id, request_payload):
     if user_service_helper.check_user_status(user, "Timed_out"):
         abort(404, description="User session timed out")
 
-    if user_service_helper.check_user_status(user, "Processed"):
-        abort(404, description="User hours already computed")
+    if not user_service_helper.check_user_status(user, "Building"):
+        abort(404, description="User hours are computed")
 
     event_type = request_payload['type']
     status = user_service_helper.define_event_status(event_type)
