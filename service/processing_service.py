@@ -1,7 +1,7 @@
 from jobs import processing_job
 from flask import jsonify, abort
 from model.user import User
-from common.constants import Statuses, LIMIT
+from common.constants import Statuses, LOW_PRIORITY_LIMIT, HIGH_PRIORITY_LIMIT
 from common import user_service_helper
 from mongoengine.errors import ValidationError, DoesNotExist
 
@@ -26,6 +26,9 @@ def get_processing_users_nr():
     return jsonify({"count": count})
 
 
-def are_processing_resources_available():
+def are_processing_resources_available(priority_type):
     current_processing_nr = get_processing_users_nr()
-    return current_processing_nr.json["count"] < LIMIT
+    if priority_type == "low":
+        return current_processing_nr.json["count"] < LOW_PRIORITY_LIMIT
+    elif priority_type == "high":
+        return current_processing_nr.json["count"] < LOW_PRIORITY_LIMIT + HIGH_PRIORITY_LIMIT

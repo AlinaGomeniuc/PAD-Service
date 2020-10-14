@@ -9,7 +9,8 @@ from mongoengine.errors import ValidationError, DoesNotExist
 
 
 def register_user(request_payload):
-    if not are_processing_resources_available():
+    priority = request_payload['priority']
+    if not are_processing_resources_available(priority):
         abort(404, description="Unavailable service resources")
 
     user = User(name=request_payload['name'],
