@@ -3,12 +3,14 @@ from flask import jsonify, abort
 from model.user import User
 from common.constants import Statuses, LIMIT
 from common import user_service_helper
+from mongoengine.errors import ValidationError, DoesNotExist
 
 
 def compute_working_hours(id):
+    user = None
     try:
         user = User.objects.get(pk=id)
-    except:
+    except (ValidationError, DoesNotExist):
         abort(404, description="User does not exist")
 
     if user_service_helper.check_user_status(user, "Timed_out"):
