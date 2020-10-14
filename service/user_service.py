@@ -5,6 +5,7 @@ from common import user_service_helper
 from common.constants import Statuses
 from service.processing_service import are_processing_resources_available
 from jobs import timeout_job
+from mongoengine.errors import ValidationError, DoesNotExist
 
 
 def register_user(request_payload):
@@ -20,18 +21,20 @@ def register_user(request_payload):
 
 
 def get_user_info(id):
+    user = None
     try:
         user = User.objects.get(pk=id)
-    except:
+    except (ValidationError, DoesNotExist):
         abort(404, description="User does not exist")
 
     return user.to_json()
 
 
 def create_event(id, request_payload):
+    user = None
     try:
         user = User.objects.get(pk=id)
-    except:
+    except (ValidationError, DoesNotExist):
         abort(404, description="User does not exist")
 
     if user_service_helper.check_user_status(user, "Timed_out"):
