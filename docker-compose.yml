@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/service_data
+    ports:
+      - "5000:5000"
+    links:
+      - mongo_db
+
+  mongo_db:
+    image: mongo:3.6.4
+    ports:
+      - "27017:27017"
